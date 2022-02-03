@@ -29,7 +29,7 @@ public class DepartmentFormController implements Initializable {
 	
 	private DepartmentService service;
 	
-	private List<DataChangeListener> dataChangeListerners = new ArrayList<>();
+	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 	
 	@FXML
 	private TextField txtId;
@@ -54,8 +54,8 @@ public class DepartmentFormController implements Initializable {
 		this.service = service;
 	}
 	
-	public void subsribeDataChangeListener(DataChangeListener listener) {
-		dataChangeListerners.add(listener);
+	public void subscribeDataChangeListener(DataChangeListener listener) {
+		dataChangeListeners.add(listener);
 	}
 	
 	@FXML
@@ -81,7 +81,7 @@ public class DepartmentFormController implements Initializable {
 	}
 	
 	private void notifyDataChangeListeners() {
-		for (DataChangeListener listener : dataChangeListerners) {
+		for (DataChangeListener listener : dataChangeListeners) {
 			listener.onDataChanged();
 		}
 	}
@@ -92,6 +92,7 @@ public class DepartmentFormController implements Initializable {
 		ValidationException exception = new ValidationException("Validation error");
 		
 		obj.setId(Utils.tryParseToInt(txtId.getText()));
+		
 		if (txtName.getText() == null || txtName.getText().trim().equals("")) {
 			exception.addError("name", "Field can't be empty");
 		}
